@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Jiggah Complex Party</title>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <header>
+        <h1>Jiggah Complex Party</h1>
+        <p>Let's come together and make it memorable!</p>
+    </header>
+
+    <main>
+        <section class="party-info">
+            <h2>Party Information</h2>
+            <p><strong>Party Date:</strong> 7 November 2026</p>
+            <p><strong>Contribution Deadline:</strong> 2 November 2026</p>
+            <p><strong>Member Contribution:</strong> MK10,000</p>
+        </section>
+
+        <section class="payment-options">
+            <h2>Support Our Party</h2>
+            <p>Choose how you would like to participate.</p>
+
+            <button id="memberButton">
+                Make a Contribution
+            </button>
+
+            <button id="sponsorButton">
+                Sponsor the Party
+            </button>
+
+            
+<div id="message" aria-live="polite"></div>
+
+<section id="paymentForm" hidden>
+    <h2 id="formTitle">Payment Details</h2>
+
+    <form id="transactionForm">
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" required>
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone"
+               placeholder="e.g. 0991234567" required>
+
+        <label for="amount">Amount (MK):</label>
+        <input type="number" id="amount"
+               min="1" step="1" required>
+
+        <button type="submit">Continue</button>
+        <button type="button" id="cancelButton">
+            Cancel
+        </button>
+    </form>
+
+    <p id="formMessage" aria-live="polite"></p>
+</section>
+
+        </section>
+    </main>
+
+    <footer>
+        <p>Jiggah Complex Party &copy; 2026</p>
+    </footer>
+</body>
+</html>
