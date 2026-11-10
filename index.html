@@ -66,34 +66,88 @@
 
         </section>
     </main>
-   <!-- PAYMENT SECTION - AIRTEL & TNM -->
-<div style="background:white; padding:20px; border-radius:12px; margin:20px; box-shadow:0 2px 8px rgba(0,0,0,0.1); font-family:Arial;">
-  <h2 style="color:#0a2342;">Pay With Mobile Money</h2>
-  <p>Choose Airtel Money or TNM Mpamba. Use your full name as reference.</p>
+<!-- MEMBER / SPONSOR PAYMENT FLOW -->
+<div id="payBox" style="background:white; padding:20px; border-radius:12px; margin:20px; font-family:Arial; box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+  <h2 style="color:#0a2342;">Join & Pay</h2>
 
-  <!-- AIRTEL -->
-  <div style="border:2px solid #e60000; border-radius:10px; padding:15px; margin-bottom:15px;">
-    <h3 style="color:#e60000; margin:0;">🔴 Airtel Money</h3>
-    <p style="font-size:18px;"><b>Merchant Code: 10103067</b></p>
-    <p>Name: <b>Albert Goodwin</b></p>
-    <p style="font-size:14px;">Dial <b>*211#</b> > Make Payment / Pay Merchant > Enter Code <b>10103067</b> > Enter Amount > Reference: <b>Your Name + JIGGAH</b> > Confirm with PIN</p>
-    <button onclick="navigator.clipboard.writeText('10103067');alert('Airtel Code Copied: 10103067')" style="background:#e60000; color:white; border:none; padding:10px 15px; border-radius:8px; width:100%; font-size:16px;">Copy Airtel Code</button>
+  <!-- STEP 1: CHOOSE TYPE -->
+  <div id="step1">
+    <p>Are you a Member or Sponsor?</p>
+    <button onclick="setType('Member',10000)" style="background:#0a2342; color:white; border:none; padding:12px; border-radius:8px; width:48%;">MEMBER - MK10,000</button>
+    <button onclick="setType('Sponsor',0)" style="background:#f0a500; color:black; border:none; padding:12px; border-radius:8px; width:48%;">SPONSOR</button>
   </div>
 
-  <!-- TNM -->
-  <div style="border:2px solid #007a33; border-radius:10px; padding:15px; margin-bottom:15px;">
-    <h3 style="color:#007a33; margin:0;">🟢 TNM Mpamba</h3>
-    <p style="font-size:18px;"><b>Merchant Code: 145308</b></p>
-    <p>Name: <b>Albert Goodwin</b></p>
-    <p style="font-size:14px;">Dial <b>*444#</b> > Pay Merchant > Enter Code <b>145308</b> > Enter Amount > Reference: <b>Your Name + JIGGAH</b> > Confirm with PIN</p>
-    <button onclick="navigator.clipboard.writeText('145308');alert('TNM Code Copied: 145308')" style="background:#007a33; color:white; border:none; padding:10px 15px; border-radius:8px; width:100%; font-size:16px;">Copy TNM Code</button>
+  <!-- STEP 2: DETAILS -->
+  <div id="step2" style="display:none; margin-top:15px;">
+    <p><b id="typeText">Member</b> - Fill your details</p>
+    <input id="fullName" placeholder="Full Name - e.g. John Phiri" style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc;">
+    <input id="phoneNum" placeholder="Your Phone - e.g. 0999123456" style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc;">
+    <input id="amountInput" placeholder="Amount - e.g. 10000" style="width:100%; padding:10px; margin-bottom:10px; border-radius:8px; border:1px solid #ccc;">
+    <p>Pay with which network?</p>
+    <select id="network" style="width:100%; padding:10px; border-radius:8px; margin-bottom:15px;">
+      <option value="Airtel">Airtel Money</option>
+      <option value="TNM">TNM Mpamba</option>
+    </select>
+    <button onclick="goToPay()" style="background:#25D366; color:white; border:none; padding:12px; border-radius:8px; width:100%; font-size:16px; font-weight:bold;">Continue to Payment →</button>
   </div>
 
-  <p style="text-align:center;"><b>Member Contribution: MK10,000</b><br>Sponsors: Any amount - MK20,000 / MK50,000 / MK100,000+</p>
-
-  <a href="https://wa.me/265985102838?text=Hi%20Albert%2C%20I%20have%20paid%20for%20Jiggah%20Complex%20Party.%20My%20name%20is%20___%20Amount%20MK___" style="display:block; background:#25D366; color:white; text-align:center; padding:12px; border-radius:8px; text-decoration:none; font-weight:bold;">Send Proof on WhatsApp - 0985 102 838</a>
-  <p style="font-size:12px; text-align:center; color:#666;">After paying, screenshot the SMS and send it on WhatsApp to Albert Goodwin. Never share your PIN with anyone.</p>
+  <!-- STEP 3: PAYMENT - SHOWS AUTOMATICALLY -->
+  <div id="step3" style="display:none; margin-top:15px; border:2px solid #0a2342; padding:15px; border-radius:10px;">
+    <h3 id="payTitle">Pay with Airtel Money</h3>
+    <p id="payDetails"></p>
+    <p style="font-size:18px; background:#f2f2f2; padding:10px; border-radius:8px; text-align:center;"><b>CODE: <span id="payCode"></span></b><br><span style="font-size:14px;">Name: Albert Goodwin</span></p>
+    <p id="paySteps" style="font-size:14px;"></p>
+    <button onclick="copyCode()" style="background:#0a2342; color:white; border:none; padding:10px; border-radius:8px; width:100%; margin-bottom:10px;">Copy Code</button>
+    <a id="dialBtn" href="#" style="display:block; background:#e60000; color:white; text-align:center; padding:12px; border-radius:8px; text-decoration:none; margin-bottom:10px;">Dial *211# Now</a>
+    <a id="whatsappBtn" href="#" target="_blank" style="display:block; background:#25D366; color:white; text-align:center; padding:12px; border-radius:8px; text-decoration:none; font-weight:bold;">Send Proof on WhatsApp to Albert</a>
+    <p style="font-size:12px; text-align:center;">After paying, screenshot SMS & send it. Never share your PIN.</p>
+  </div>
 </div>
+
+<script>
+let userType = 'Member';
+let userAmount = 10000;
+let currentCode = '10103067';
+
+function setType(type, amt){
+  userType = type;
+  userAmount = amt;
+  document.getElementById('step1').style.display='none';
+  document.getElementById('step2').style.display='block';
+  document.getElementById('typeText').innerText = type;
+  if(amt>0){ document.getElementById('amountInput').value = amt; }
+  else { document.getElementById('amountInput').value = ''; document.getElementById('amountInput').placeholder='Enter Sponsor Amount e.g. 50000'; }
+}
+function goToPay(){
+  let name = document.getElementById('fullName').value;
+  let phone = document.getElementById('phoneNum').value;
+  let amount = document.getElementById('amountInput').value;
+  let net = document.getElementById('network').value;
+  if(!name || !amount){ alert('Please fill Name and Amount'); return; }
+  document.getElementById('step2').style.display='none';
+  document.getElementById('step3').style.display='block';
+  if(net==='Airtel'){
+    currentCode='10103067';
+    document.getElementById('payTitle').innerText='Pay with Airtel Money 🔴';
+    document.getElementById('paySteps').innerText='Dial *211# > Make Payment / Pay Merchant > Enter Code 10103067 > Amount MK'+amount+' > Reference: '+name+' > Confirm with PIN';
+    document.getElementById('dialBtn').href='tel:*211%23';
+    document.getElementById('dialBtn').innerText='Dial *211# Now';
+    document.getElementById('dialBtn').style.background='#e60000';
+  } else {
+    currentCode='145308';
+    document.getElementById('payTitle').innerText='Pay with TNM Mpamba 🟢';
+    document.getElementById('paySteps').innerText='Dial *444# > Pay Merchant > Enter Code 145308 > Amount MK'+amount+' > Reference: '+name+' > Confirm with PIN';
+    document.getElementById('dialBtn').href='tel:*444%23';
+    document.getElementById('dialBtn').innerText='Dial *444# Now';
+    document.getElementById('dialBtn').style.background='#007a33';
+  }
+  document.getElementById('payCode').innerText=currentCode;
+  document.getElementById('payDetails').innerText = name + ' ('+userType+') - MK' + amount + ' via ' + net;
+  let msg = 'Hi Albert, I have paid for Jiggah Complex Party. Name: '+name+' Type: '+userType+' Amount: MK'+amount+' Network: '+net+' My Phone: '+phone;
+  document.getElementById('whatsappBtn').href='https://wa.me/265985102838?text='+encodeURIComponent(msg);
+}
+function copyCode(){ navigator.clipboard.writeText(currentCode); alert('Code Copied: '+currentCode); }
+</script>
     <footer>
         <p>Jiggah Complex Party &copy; 2026</p>
     </footer>
